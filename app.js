@@ -95,7 +95,7 @@ var app = new Vue({
 
 
         //data form input output to department
-        axios.post('http://127.0.0.1:8000/api/ProfileDetailDepartment', {
+        axios.post('https://www.ประชุมเชียร์วิศวะบางมด.com/api/ProfileDetailDepartment', {
           studentID: document.getElementById('studentID').value,
         })
         .then(function (response) {
