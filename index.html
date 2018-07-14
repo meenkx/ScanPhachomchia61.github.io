@@ -1,0 +1,90 @@
+<html>
+  <head>
+    <title>Instascan &ndash; Demo</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/6.2.1/adapter.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.min.js"></script>
+    <script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.25.0/sweetalert2.min.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.25.0/sweetalert2.all.min.js"></script>
+    <!-- Include a polyfill for ES6 Promises (optional) for IE11, UC Browser and Android browser support -->
+    <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
+  </head>
+  <body>
+    <div id="app">
+
+      <div class="preview-container">
+        <video id="preview"></video>
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-5 mx-auto" style="display: flex;margin: 30px 0px;">
+              <input id="studentID" type="text" ref="studentID" class="form-control" name="studentID" placeholder="61XXXXXXXX" required autofocus style="border-radius: 50px;text-align: center">
+              <button type="button"  @click.prevent="postStudentID()" class="btn btn-primary" style="border-radius: 30px;margin-left: 10px">SUBMIT</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-5 mx-auto" style="display: flex;background-color: white;padding: 12px 0px;border-radius: 15px;box-shadow: 2px 3px #dbdbdb;">
+              <div class="col-4"  id="department" style="border-right: 1px solid black;padding-right: 10px;text-align: right;color: #28a745;font-weight: bold">คณะ</div>
+              <template v-if="sdIDOut.length === 0">
+                <div class="col-8" style="color: #28a745;font-weight: bold">ชื่อ - นามสกุล</div>
+              </template>
+              <template v-else>
+                <div class="col-8" id="studentIDshow" style="color: #28a745;font-weight: bold">{{ sdIDOut }}</div>
+              </template> 
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar">
+        <div class="content" style="width: 100%;display: flex">
+          <section class="nameScan" style="width: 50%">
+            <h2 style="border-right: 1px solid black;">NAME</h2>
+            <ul>
+              <ul v-if="scans.length === 0">
+                <li class="empty" style="border-right: 1px solid;">-</li>
+              </ul>            
+            </ul>
+            <transition-group name="names" tag="ul" style="border-right: 1px solid;">
+              <li v-for="namee in names" :key="namee.date" :title="namee.name" style="text-align: center">{{ namee.name }}</li>
+            </transition-group>
+          </section>
+          <section class="scans" style="width: 50%">
+            <h2>ID</h2>
+            <ul v-if="scans.length === 0">
+              <li class="empty">-</li>
+            </ul>
+            <transition-group name="scans" tag="ul">
+              <li v-for="scan in scans" :key="scan.date" :title="scan.content" style="text-align: center">{{ scan.content }}</li>
+            </transition-group>
+          </section>
+        </div>
+      </div>
+
+      <div class="cameraShow">
+        <section class="cameras">
+          <ul style="list-style-type: none;margin-bottom: 0px">
+            <li v-if="cameras.length === 0" class="empty">No cameras found</li>
+            <li v-for="camera in cameras">
+              <span v-if="camera.id == activeCameraId" :title="formatName(camera.name)" class="active">{{ formatName(camera.name) }}</span>
+              <span v-if="camera.id != activeCameraId" :title="formatName(camera.name)">
+                <a @click.stop="selectCamera(camera)">{{ formatName(camera.name) }}</a>
+              </span>
+            </li>
+          </ul>
+        </section>
+      </div>
+
+    </div>
+
+    <script type="text/javascript" src="app.js"></script>
+    
+  </body>
+</html>
