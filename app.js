@@ -17,7 +17,7 @@ var app = new Vue({
     self.scanner.addListener('scan', function (content, image) {
 
             //data form scan output to department
-            axios.post('https://www.ประชุมเชียร์วิศวะบางมด.com/api/ProfileDetailDepartment', {
+            axios.post('https://ประชุมเชียร์วิศวะบางมด.com/public/index.php/api/ProfileDetailDepartment', {
                 studentID: content,
             })
             .then(function (response) {
@@ -37,7 +37,7 @@ var app = new Vue({
             // get name
             axios({
                 method:'post',
-                url: 'http://127.0.0.1:8000/api/ProfileDetail',
+                url: 'https://ประชุมเชียร์วิศวะบางมด.com/public/index.php/api/ProfileDetail',
                 data: {
                     studentID:content
                 }
@@ -53,7 +53,7 @@ var app = new Vue({
             });
 
             //insert data to history
-            axios.post('http://127.0.0.1:8000/api/insertDATA', {
+            axios.post('https://ประชุมเชียร์วิศวะบางมด.com/public/index.php/api/insertDATA', {
                 studentID: content,
             })
             .then(function (response) {
@@ -95,7 +95,7 @@ var app = new Vue({
 
 
         //data form input output to department
-        axios.post('https://www.ประชุมเชียร์วิศวะบางมด.com/api/ProfileDetailDepartment', {
+        axios.post('https://ประชุมเชียร์วิศวะบางมด.com/public/index.php/api/ProfileDetailDepartment', {
           studentID: document.getElementById('studentID').value,
         })
         .then(function (response) {
@@ -113,7 +113,7 @@ var app = new Vue({
         });
 
         //data form input output to name
-        axios.post('http://127.0.0.1:8000/api/ProfileDetail', {
+        axios.post('https://ประชุมเชียร์วิศวะบางมด.com/public/index.php/api/ProfileDetail', {
           studentID: document.getElementById('studentID').value,
         })
         .then(function (response) {
@@ -127,7 +127,7 @@ var app = new Vue({
         });
 
         //insert data to history
-        axios.post('http://127.0.0.1:8000/api/insertDATA', {
+        axios.post('https://ประชุมเชียร์วิศวะบางมด.com/public/index.php/api/insertDATA', {
           studentID: document.getElementById('studentID').value,
         })
         .then(function (response) {
