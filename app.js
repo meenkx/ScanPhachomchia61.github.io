@@ -17,7 +17,7 @@ var app = new Vue({
     self.scanner.addListener('scan', function (content, image) {
 
             //data form scan output to department
-            axios.post('http://127.0.0.1:8000/api/ProfileDetailDepartment', {
+            axios.post('https://www.ประชุมเชียร์วิศวะบางมด.com/api/ProfileDetailDepartment', {
                 studentID: content,
             })
             .then(function (response) {
