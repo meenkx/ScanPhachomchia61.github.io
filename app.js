@@ -64,8 +64,8 @@ var app = new Vue({
                     }
                 })
                 .then(function (response) {
-                    var audio = new Audio('scannerbeepSoundEffect.mp3');
-                    audio.play();
+                    // var audio = new Audio('scannerbeepSoundEffect.mp3');
+                    // audio.play();
                     self.sdIDOut = content;
                     self.scans.unshift({ date: +(Date.now()), content: content });
                     self.names.unshift({ date: +(Date.now()), name: response.data });
@@ -112,7 +112,6 @@ var app = new Vue({
           studentID: document.getElementById('studentID').value,
         })
         .then(function (response) {
-          //
           const toast = swal.mixin({
             toast: true,
             position: 'top-left',
@@ -151,8 +150,8 @@ var app = new Vue({
             studentID: document.getElementById('studentID').value,
           })
           .then(function (response) {
-              var audio = new Audio('scannerbeepSoundEffect.mp3');
-              audio.play();
+              // var audio = new Audio('scannerbeepSoundEffect.mp3');
+              // audio.play();
               thiss.sdIDOut = thiss.$refs.studentID.value;
               thiss.scans.unshift({ date: +(Date.now()), content: document.getElementById('studentID').value });
               thiss.names.unshift({ date: +(Date.now()), name: response.data });
