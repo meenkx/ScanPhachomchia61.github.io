@@ -64,7 +64,7 @@ var app = new Vue({
                     }
                 })
                 .then(function (response) {
-                    var audio = new Audio('https://meenkx.github.io/ScanPhachomchia61.github.io/scannerbeepSoundEffect.mp3');
+                    var audio = document.getElementById("myAudio"); 
                     audio.play();
                     self.sdIDOut = content;
                     self.scans.unshift({ date: +(Date.now()), content: content });
@@ -150,7 +150,7 @@ var app = new Vue({
             studentID: document.getElementById('studentID').value,
           })
           .then(function (response) {
-              var audio = new Audio('https://meenkx.github.io/ScanPhachomchia61.github.io/scannerbeepSoundEffect.mp3');
+              var audio = document.getElementById("myAudio"); 
               audio.play();
               thiss.sdIDOut = thiss.$refs.studentID.value;
               thiss.scans.unshift({ date: +(Date.now()), content: document.getElementById('studentID').value });
