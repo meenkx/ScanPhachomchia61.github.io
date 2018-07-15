@@ -16,50 +16,64 @@ var app = new Vue({
     self.scanner = new Instascan.Scanner({ video: document.getElementById('preview'), scanPeriod: 5 });
     self.scanner.addListener('scan', function (content, image) {
 
-            //data form scan output to department
-            axios.post('https://ประชุมเชียร์วิศวะบางมด.com/public/index.php/api/ProfileDetailDepartment', {
-                studentID: content,
-            })
-            .then(function (response) {
-                document.getElementById('department').innerHTML = response.data;
-            })
-            .catch(function (error) {
-                swal({
-                  type: 'error',
-                  title: 'ยืนยันตัวตนผิดพลาด',
-                  text: 'ไม่พบผู้ใช้งานในนี้ในฐานข้อมูลของเรา',
-                  footer: '<a href>โปรดติดต่อ สโมสรนักศึกษาคณะวิศวกรรมศาสตร์</a>'
-                });
-                document.getElementById('department').innerHTML = "คณะ";
-                // console.log(error);
-            });
-
-            // get name
-            axios({
-                method:'post',
-                url: 'https://ประชุมเชียร์วิศวะบางมด.com/public/index.php/api/ProfileDetail',
-                data: {
-                    studentID:content
-                }
-            })
-            .then(function (response) {
-                self.sdIDOut = content;
-                self.scans.unshift({ date: +(Date.now()), content: content });
-                self.names.unshift({ date: +(Date.now()), name: response.data });
-            })
-            .catch(function (error) {
-                console.log(" no data");
-                console.log(error);
-            });
-
             //insert data to history
             axios.post('https://ประชุมเชียร์วิศวะบางมด.com/public/index.php/api/insertDATA', {
                 studentID: content,
             })
             .then(function (response) {
-                //
+
+            //
+            const toast = swal.mixin({
+              toast: true,
+              position: 'top-left',
+              showConfirmButton: false,
+              timer: 3000
+            });
+          
+            toast({
+              type: 'error',
+              title: response.data
+            })
+            console.log(response.data);
             })
             .catch(function (error) {
+                //data form scan output to department
+                axios.post('https://ประชุมเชียร์วิศวะบางมด.com/public/index.php/api/ProfileDetailDepartment', {
+                    studentID: content,
+                })
+                .then(function (response) {
+                    document.getElementById('department').innerHTML = response.data;
+                })
+                .catch(function (error) {
+                    swal({
+                      type: 'error',
+                      title: 'ยืนยันตัวตนผิดพลาด',
+                      text: 'ไม่พบผู้ใช้งานในนี้ในฐานข้อมูลของเรา',
+                      footer: '<a href>โปรดติดต่อ สโมสรนักศึกษาคณะวิศวกรรมศาสตร์</a>'
+                    });
+                    document.getElementById('department').innerHTML = "คณะ";
+                    // console.log(error);
+                });
+
+                // get name
+                axios({
+                    method:'post',
+                    url: 'https://ประชุมเชียร์วิศวะบางมด.com/public/index.php/api/ProfileDetail',
+                    data: {
+                        studentID:content
+                    }
+                })
+                .then(function (response) {
+                    var audio = new Audio('scannerbeepSoundEffect.mp3');
+                    audio.play();
+                    self.sdIDOut = content;
+                    self.scans.unshift({ date: +(Date.now()), content: content });
+                    self.names.unshift({ date: +(Date.now()), name: response.data });
+                })
+                .catch(function (error) {
+                    console.log(" no data");
+                    console.log(error);
+                });
                 console.log(error);
             });
 
@@ -93,43 +107,7 @@ var app = new Vue({
       // data form input
       id = document.getElementById('studentID').value;
 
-
-        //data form input output to department
-        // axios.post('https://ประชุมเชียร์วิศวะบางมด.com/public/index.php/api/ProfileDetailDepartment', {
-        axios.post('https://ประชุมเชียร์วิศวะบางมด.com/public/index.php/api/ProfileDetailDepartment', {
-          studentID: document.getElementById('studentID').value,
-        })
-        .then(function (response) {
-          document.getElementById('department').innerHTML = response.data;
-        })
-        .catch(function (error) {
-            swal({
-              type: 'error',
-              title: 'ยืนยันตัวตนผิดพลาด',
-              text: 'ไม่พบผู้ใช้งานในนี้ในฐานข้อมูลของเรา',
-              footer: '<a href>โปรดติดต่อ สโมสรนักศึกษาคณะวิศวกรรมศาสตร์</a>'
-            });
-            document.getElementById('department').innerHTML = "คณะ";
-            console.log(error);
-        });
-
-        //data form input output to name
-        // axios.post('https://ประชุมเชียร์วิศวะบางมด.com/public/index.php/api/ProfileDetail', {
-        axios.post('https://ประชุมเชียร์วิศวะบางมด.com/public/index.php/api/ProfileDetail', {
-          studentID: document.getElementById('studentID').value,
-        })
-        .then(function (response) {
-            thiss.sdIDOut = thiss.$refs.studentID.value;
-            thiss.scans.unshift({ date: +(Date.now()), content: document.getElementById('studentID').value });
-            thiss.names.unshift({ date: +(Date.now()), name: response.data });
-        })
-        .catch(function (error) {
-          thiss.sdIDOut = "ชื่อ - นามสกุล";
-          console.log(error);
-        });
-
         //insert data to history
-        // axios.post('https://ประชุมเชียร์วิศวะบางมด.com/public/index.php/api/insertDATA', {
         axios.post('https://ประชุมเชียร์วิศวะบางมด.com/public/index.php/api/insertDATA', {
           studentID: document.getElementById('studentID').value,
         })
@@ -137,17 +115,53 @@ var app = new Vue({
           //
           const toast = swal.mixin({
             toast: true,
-            position: 'top-end',
+            position: 'top-left',
             showConfirmButton: false,
-            timer: 1000
+            timer: 3000
           });
-          
+        
           toast({
-            type: 'success',
-            title: 'เพิ่มข้อมูลเรียบร้อย'
+            type: 'error',
+            title: response.data
           })
+          console.log(response.data);
         })
         .catch(function (error) {
+
+        //data form input output to department
+          axios.post('https://ประชุมเชียร์วิศวะบางมด.com/public/index.php/api/ProfileDetailDepartment', {
+            studentID: document.getElementById('studentID').value,
+          })
+          .then(function (response) {
+            document.getElementById('department').innerHTML = response.data;
+          })
+          .catch(function (error) {
+              swal({
+                type: 'error',
+                title: 'ยืนยันตัวตนผิดพลาด',
+                text: 'ไม่พบผู้ใช้งานในนี้ในฐานข้อมูลของเรา',
+                footer: '<a href>โปรดติดต่อ สโมสรนักศึกษาคณะวิศวกรรมศาสตร์</a>'
+              });
+              document.getElementById('department').innerHTML = "คณะ";
+              console.log(error);
+          });
+  
+          //data form input output to name
+          axios.post('https://ประชุมเชียร์วิศวะบางมด.com/public/index.php/api/ProfileDetail', {
+            studentID: document.getElementById('studentID').value,
+          })
+          .then(function (response) {
+              var audio = new Audio('scannerbeepSoundEffect.mp3');
+              audio.play();
+              thiss.sdIDOut = thiss.$refs.studentID.value;
+              thiss.scans.unshift({ date: +(Date.now()), content: document.getElementById('studentID').value });
+              thiss.names.unshift({ date: +(Date.now()), name: response.data });
+          })
+          .catch(function (error) {
+            thiss.sdIDOut = "ชื่อ - นามสกุล";
+            console.log(error);
+          });
+
           console.log(error);
         });
 
