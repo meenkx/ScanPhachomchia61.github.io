@@ -95,6 +95,7 @@ var app = new Vue({
 
 
         //data form input output to department
+        // axios.post('https://ประชุมเชียร์วิศวะบางมด.com/public/index.php/api/ProfileDetailDepartment', {
         axios.post('https://ประชุมเชียร์วิศวะบางมด.com/public/index.php/api/ProfileDetailDepartment', {
           studentID: document.getElementById('studentID').value,
         })
@@ -113,6 +114,7 @@ var app = new Vue({
         });
 
         //data form input output to name
+        // axios.post('https://ประชุมเชียร์วิศวะบางมด.com/public/index.php/api/ProfileDetail', {
         axios.post('https://ประชุมเชียร์วิศวะบางมด.com/public/index.php/api/ProfileDetail', {
           studentID: document.getElementById('studentID').value,
         })
@@ -127,11 +129,23 @@ var app = new Vue({
         });
 
         //insert data to history
+        // axios.post('https://ประชุมเชียร์วิศวะบางมด.com/public/index.php/api/insertDATA', {
         axios.post('https://ประชุมเชียร์วิศวะบางมด.com/public/index.php/api/insertDATA', {
           studentID: document.getElementById('studentID').value,
         })
         .then(function (response) {
           //
+          const toast = swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1000
+          });
+          
+          toast({
+            type: 'success',
+            title: 'เพิ่มข้อมูลเรียบร้อย'
+          })
         })
         .catch(function (error) {
           console.log(error);
