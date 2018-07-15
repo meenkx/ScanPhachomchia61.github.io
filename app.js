@@ -1,3 +1,4 @@
+Vue.http.headers.common['Access-Control-Allow-Origin'] = '*';
 var app = new Vue({
   el: '#app',
   data: {
@@ -37,14 +38,15 @@ var app = new Vue({
             console.log(response.data);
             })
             .catch(function (error) {
-                // playsound 
-                var audio = document.getElementById("myAudio"); 
-                audio.play();
+
                 //data form scan output to department
                 axios.post('https://ประชุมเชียร์วิศวะบางมด.com/public/index.php/api/ProfileDetailDepartment', {
                     studentID: content,
                 })
                 .then(function (response) {
+                    // playsound 
+                    var audio = document.getElementById("myAudio"); 
+                    audio.play();
                     document.getElementById('department').innerHTML = response.data;
                 })
                 .catch(function (error) {
@@ -67,6 +69,9 @@ var app = new Vue({
                     }
                 })
                 .then(function (response) {
+                    // playsound 
+                    var audio = document.getElementById("myAudio"); 
+                    audio.play();
                     self.sdIDOut = content;
                     self.scans.unshift({ date: +(Date.now()), content: content });
                     self.names.unshift({ date: +(Date.now()), name: response.data });
@@ -127,14 +132,15 @@ var app = new Vue({
           console.log(response.data);
         })
         .catch(function (error) {
-        // playsound 
-        var audio = document.getElementById("myAudio"); 
-        audio.play();
+
         //data form input output to department
           axios.post('https://ประชุมเชียร์วิศวะบางมด.com/public/index.php/api/ProfileDetailDepartment', {
             studentID: document.getElementById('studentID').value,
           })
           .then(function (response) {
+            // playsound 
+            var audio = document.getElementById("myAudio"); 
+            audio.play();
             document.getElementById('department').innerHTML = response.data;
           })
           .catch(function (error) {
@@ -153,6 +159,9 @@ var app = new Vue({
             studentID: document.getElementById('studentID').value,
           })
           .then(function (response) {
+              // playsound 
+              var audio = document.getElementById("myAudio"); 
+              audio.play();
               thiss.sdIDOut = thiss.$refs.studentID.value;
               thiss.scans.unshift({ date: +(Date.now()), content: document.getElementById('studentID').value });
               thiss.names.unshift({ date: +(Date.now()), name: response.data });
