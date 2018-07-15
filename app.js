@@ -1,4 +1,3 @@
-Vue.http.headers.common['Access-Control-Allow-Origin'] = '*';
 var app = new Vue({
   el: '#app',
   data: {
