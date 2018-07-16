@@ -17,7 +17,7 @@ var app = new Vue({
     self.scanner.addListener('scan', function (content, image) {
 
             //insert data to history
-            axios.post('https://ประชุมเชียร์วิศวะบางมด.com/public/index.php/api/insertDATA', {
+            axios.post('https://ประชุมเชียร์วิศวะบางมด.com/api/insertDATA', {
                 studentID: content,
             })
             .then(function (response) {
@@ -39,7 +39,7 @@ var app = new Vue({
             .catch(function (error) {
 
                 //data form scan output to department
-                axios.post('https://ประชุมเชียร์วิศวะบางมด.com/public/index.php/api/ProfileDetailDepartment', {
+                axios.post('https://ประชุมเชียร์วิศวะบางมด.com/api/ProfileDetailDepartment', {
                     studentID: content,
                 })
                 .then(function (response) {
@@ -62,7 +62,7 @@ var app = new Vue({
                 // get name
                 axios({
                     method:'post',
-                    url: 'https://ประชุมเชียร์วิศวะบางมด.com/public/index.php/api/ProfileDetail',
+                    url: 'https://ประชุมเชียร์วิศวะบางมด.com/api/ProfileDetail',
                     data: {
                         studentID:content
                     }
@@ -113,7 +113,7 @@ var app = new Vue({
       id = document.getElementById('studentID').value;
 
         //insert data to history
-        axios.post('https://ประชุมเชียร์วิศวะบางมด.com/public/index.php/api/insertDATA', {
+        axios.post('https://ประชุมเชียร์วิศวะบางมด.com/api/insertDATA', {
           studentID: document.getElementById('studentID').value,
         })
         .then(function (response) {
@@ -133,7 +133,7 @@ var app = new Vue({
         .catch(function (error) {
 
         //data form input output to department
-          axios.post('https://ประชุมเชียร์วิศวะบางมด.com/public/index.php/api/ProfileDetailDepartment', {
+          axios.post('https://ประชุมเชียร์วิศวะบางมด.com/api/ProfileDetailDepartment', {
             studentID: document.getElementById('studentID').value,
           })
           .then(function (response) {
@@ -154,7 +154,7 @@ var app = new Vue({
           });
   
           //data form input output to name
-          axios.post('https://ประชุมเชียร์วิศวะบางมด.com/public/index.php/api/ProfileDetail', {
+          axios.post('https://ประชุมเชียร์วิศวะบางมด.com/api/ProfileDetail', {
             studentID: document.getElementById('studentID').value,
           })
           .then(function (response) {
