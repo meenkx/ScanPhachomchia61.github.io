@@ -43,9 +43,6 @@ var app = new Vue({
                     studentID: content,
                 })
                 .then(function (response) {
-                    // playsound 
-                    var audio = document.getElementById("myAudio"); 
-                    audio.play();
                     document.getElementById('department').innerHTML = response.data;
                 })
                 .catch(function (error) {
@@ -137,9 +134,6 @@ var app = new Vue({
             studentID: document.getElementById('studentID').value,
           })
           .then(function (response) {
-            // playsound 
-            var audio = document.getElementById("myAudio"); 
-            audio.play();
             document.getElementById('department').innerHTML = response.data;
           })
           .catch(function (error) {
